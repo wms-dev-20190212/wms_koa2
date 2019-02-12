@@ -143,7 +143,7 @@ app.use(users.routes(), users.allowedMethods())*/
 */
 
 
-var port = normalizePort(process.env.PORT || '1434');
+var port = normalizePort(process.env.PORT || '1433');
 // app.set('port', port);
 
 /**

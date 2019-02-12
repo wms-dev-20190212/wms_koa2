@@ -14,7 +14,7 @@ module.exports = {
   'GET /api/user/userList': async (ctx, next) => {
     await next();
     let sqlData
-    sqlData = " select  distinct  a.id, a.userName, a.password" +
+    sqlData = " select  distinct  a.id, a.userName, a.address, a.iphoneNum, a.depart" +
       " from  users a  " +
       " where a.isDelete = 0  " +
       " ORDER BY a.id  ASC limit 0,10000"
@@ -39,13 +39,14 @@ module.exports = {
   'POST /api/user/add': async (ctx, next) => {
     await next();
     var userMsgData = ctx.request.body;
+    userMsgData.password = '123456'
     console.log(userMsgData)
     var vilad = await models.findAndCountAll({
       where: {
         userName: userMsgData.userName
       }
     });
-    console.log(vilad.count)
+    let mes, success,code
     if (vilad.count == 0) {
       userMsgData.isDelete = 0;
       userMsgData.sessionID = 0;
@@ -54,15 +55,20 @@ module.exports = {
       userMsgData.passwordUpdateDate = Date.now();
       userMsgData.timestamp = Date.now();
       mes = service.createProduct(userMsgData);
+      code = 200
+      success = true
     } else {
-      var mes = '用户名已存在！'
+      mes = '用户名已存在！'
+      code = 400
+      success = false
     }
-    var users_sss = {
-      mes: mes,
-      code: 10000,
+
+    var dataObj = {
+      message: mes,
+      code: code,
+      success: success
     }
-    ctx.response.type = 'application/json';
-    ctx.response.body = users_sss;
+    ctx.body = dataObj;
   },
   'POST /api/user/login': async (ctx, next) => {
     await next();
@@ -122,12 +128,30 @@ module.exports = {
   },
   'PUT /api/user/edit': async (ctx, next) => {
     await next();
+    var mes, success
+      await models.update(ctx.request.body, {
+        where: {
+          id: ctx.request.body.id
+        }
+      });
+      mes = '修改成功！'
+      success = true
+
+    var dataObj = {
+      message: mes,
+      code: 200,
+      success: success
+    }
+    ctx.body = dataObj;
+
+  },
+  'PUT /api/user/resetPwd': async (ctx, next) => {
+    await next();
     // console.log(JSON.stringify('1'+JSON.stringify(ctx.params)))
     // console.log(JSON.stringify('2'+JSON.stringify(ctx.request.body)))
     let obj = {}
     obj.id = ctx.request.body.id
-    obj.userName = ctx.request.body.userName
-    obj.password = ctx.request.body.newPassword
+    obj.password = ctx.request.body.newPwd
     console.log(JSON.stringify(obj))
     // obj.userName = 'gyx'
     var vilad = await models.findAndCountAll({
@@ -136,7 +160,7 @@ module.exports = {
             id: ctx.request.body.id
           },
           {
-            password: ctx.request.body.password
+            password: ctx.request.body.oldPwd
           }
         ]
       },
@@ -153,7 +177,47 @@ module.exports = {
       mes = '修改成功！'
       success = true
     } else {
-      mes = '密码输入错误！'
+      mes = '旧密码输入错误！'
+      success = false
+    }
+
+    var dataObj = {
+      message: mes,
+      code: 200,
+      success: success
+    }
+    ctx.body = dataObj;
+
+  },
+  'PUT /api/user/resetPwdFac': async (ctx, next) => {
+    await next();
+    // console.log(JSON.stringify('1'+JSON.stringify(ctx.params)))
+    // console.log(JSON.stringify('2'+JSON.stringify(ctx.request.body)))
+    let obj = {}
+    obj.id = ctx.request.body.id
+    obj.password = '123456'
+    console.log(JSON.stringify(obj))
+    var vilad = await models.findAndCountAll({
+      where: {
+        '$and': [{
+            id: ctx.request.body.id
+          }
+        ]
+      },
+      limit: 1
+    });
+    console.log(vilad.count)
+    var mes, success
+    if (vilad.count >= 1) {
+      await models.update(obj, {
+        where: {
+          id: ctx.request.body.id
+        }
+      });
+      mes = '重置成功！'
+      success = true
+    } else {
+      mes = '重置失败！'
       success = false
     }
 

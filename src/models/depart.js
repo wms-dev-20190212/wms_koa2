@@ -7,6 +7,10 @@ var dbForm = dbConfig('depart', {
     primaryKey: true
   },
   isDelete: Sequelize.BIGINT(11),
+  parent_id: {
+    type: Sequelize.STRING(50),
+    allowNull: false
+  },
   name: Sequelize.STRING(255),
   des: {
     type: Sequelize.STRING(255),

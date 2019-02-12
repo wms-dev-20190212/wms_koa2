@@ -33,10 +33,10 @@ module.exports = {
   'GET /api/departList': async (ctx, next) => {
     await next();
     let sqlData
-    sqlData = " select  distinct  a.id, a.sort, a.tabName" +
-      " from  tabList a  " +
+    sqlData = " select  distinct  a.id, a.parent_id, a.name, a.des, a.major, a.phone" +
+      " from  depart a  " +
       " where a.isDelete = 0  " +
-      " ORDER BY a.sort  ASC"
+      " ORDER BY a.id  ASC"
     var loadData = await sequelize.query(sqlData, {
       // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
       type: sequelize.QueryTypes.SELECT
@@ -61,7 +61,7 @@ module.exports = {
       await next();
       var vilad = service.createProduct(ctx.request.body);
       var data = {
-        message: '请求成功',
+        message: '添加成功',
         code: 200,
         success: true,
         data: vilad
