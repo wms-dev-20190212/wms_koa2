@@ -1,0 +1,41 @@
+2019-01-11: process controller: api.js...
+2019-01-11: register URL mapping: GET /api/user
+2019-01-11: register URL mapping: POST /api/file/upload
+2019-01-11: register URL mapping: GET /api/robotapi
+2019-01-11: process controller: collectionList.js...
+2019-01-11: Load ./config-test.js...
+2019-01-11: register URL mapping: POST /api/collectionList
+2019-01-11: register URL mapping: GET /api/typeList
+2019-01-11: register URL mapping: POST /api/collectionListadd
+2019-01-11: process controller: collectionUrl.js...
+2019-01-11: register URL mapping: POST /api/collectionUrl
+2019-01-11: register URL mapping: POST /api/collectionUrlAdd
+2019-01-11: register URL mapping: DELETE  /api/collectionUrl/:id
+2019-01-11: process controller: dashboard.js...
+2019-01-11: register URL mapping: GET /api/dashboardList
+2019-01-11: register URL mapping: POST /api/dashboard
+2019-01-11: register URL mapping: PUT  /api/dashboard
+2019-01-11: register URL mapping: DELETE  /api/dashboard/:id
+2019-01-11: process controller: tabDetail.js...
+2019-01-11: register URL mapping: GET /api/tabDetail
+2019-01-11: register URL mapping: POST /api/tabDetail
+2019-01-11: register URL mapping: PUT  /api/tabDetail
+2019-01-11: register URL mapping: PUT  /api/addStar
+2019-01-11: register URL mapping: DELETE  /api/tabDetail/:id
+2019-01-11: process controller: tabList.js...
+2019-01-11: register URL mapping: GET /api/tabList
+2019-01-11: register URL mapping: POST /api/tabList
+2019-01-11: register URL mapping: PUT  /api/tabList
+2019-01-11: register URL mapping: DELETE  /api/tabList/:id
+2019-01-11: process controller: users.js...
+2019-01-11: register URL mapping: GET /api/user/userList
+2019-01-11: register URL mapping: POST /api/user/add
+2019-01-11: register URL mapping: POST /api/user/login
+2019-01-11: register URL mapping: PUT  /api/user/edit
+2019-01-11: register URL mapping: DELETE  /api/user/:id
+2019-01-11: process controller: videoList.js...
+2019-01-11: register URL mapping: GET /api/token
+2019-01-11: register URL mapping: GET /api/videoList
+2019-01-11: register URL mapping: POST /api/addVideo
+2019-01-11: Fri, 11 Jan 2019 05:15:03 GMT koa deprecated Support for generators will be removed in v3. See the documentation for examples of how to convert old middleware https://github.com/koajs/koa/blob/master/docs/migration.md at build\app.js:35:5
+2019-01-11: 端口号：1433
