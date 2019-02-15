@@ -36,15 +36,15 @@ module.exports = {
     let offset = GetUrlParam(ctx.url, "offset") || 0;
     let limit = GetUrlParam(ctx.url, "limit") || 20;
     let tabId
-    if(GetUrlParam(ctx.url, "tabId")){
-       tabId = " and a.tabId = '" + GetUrlParam(ctx.url, "tabId").toString()+ "'  and a.tabId = b.id";
-    }else{
-       tabId = ' and a.tabId = b.id';
-    }
+    // if(GetUrlParam(ctx.url, "tabId")){
+    //    tabId = " and a.tabId = '" + GetUrlParam(ctx.url, "tabId").toString()+ "'  and a.tabId = b.id";
+    // }else{
+    //    tabId = ' and a.tabId = b.id';
+    // }
 
-    sqlData = " select  distinct  a.id, a.tabId, a.star, a.title, a.url, a.thumbUrl, a.content, a.picContent,b.tabName as tabName" +
-      " from  tabDetail a , tabList b" +
-      " where a.isDelete = 0 "+ tabId +
+    sqlData = " select  distinct  a.id, a.maintype, a.subtype, a.name, a.encode, a.barcode, a.size, a.unit, a.upperlimit, a.lowerlimit, a.inprice, a.outprice, a.pic, a.content,b.name as goodsType,b.lowerclass as lowerclass" +
+      " from  goods a , goodsType b" +
+      " where a.isDelete = 0 "+
       " ORDER BY a.id  ASC limit "+offset+","+limit
     var loadData = await sequelize.query(sqlData, {
       // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值

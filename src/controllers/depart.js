@@ -29,18 +29,64 @@ function GetUrlParam(url, paraName) {
   }
 }
 
-module.exports = {
-  'GET /api/departList': async (ctx, next) => {
-    await next();
-    let sqlData
-    sqlData = " select  distinct  a.id, a.parent_id, a.name, a.des, a.major, a.phone" +
+// function objToStrMap(obj) {
+//   let strMap = new Map();
+//   for (let k of Object.keys(obj)) {
+//     strMap.set(k, obj[k]);
+//   }
+//     // console.log(JSON.stringify(strMap.get('id')));
+//   return strMap;
+// }
+
+//查询
+async function searchById() {
+  try {
+    let sqlDataById, childDepartList
+    sqlDataById = " select  distinct  a.id, a.parent_id, a.name, a.des, a.major, a.phone" +
       " from  depart a  " +
-      " where a.isDelete = 0  " +
+      " where a.isDelete = 0 and a.parent_id = '0' " +
       " ORDER BY a.id  ASC"
-    var loadData = await sequelize.query(sqlData, {
+    var departMapList = await sequelize.query(sqlDataById, {
       // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
       type: sequelize.QueryTypes.SELECT
     })
+
+    for(let x of departMapList){
+      childDepartList = await searchByPid(x.id);
+      x.children = childDepartList
+    }
+
+    return departMapList
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+//递归查询
+async function searchByPid(id) {
+  try {
+    let sqlData, childDepartList
+    sqlData = " select  distinct  a.id, a.parent_id, a.name, a.des, a.major, a.phone" +
+      " from  depart a  " +
+      " where a.isDelete = 0  and a.parent_id ='" + id + "' ORDER BY a.id  ASC"
+    var departMapList = await sequelize.query(sqlData, {
+      // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
+      type: sequelize.QueryTypes.SELECT
+    })
+    for(let x of departMapList){
+      childDepartList = await searchByPid(x.id);
+      x.children = childDepartList
+    }
+    return departMapList
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports = {
+  'GET /api/departList': async (ctx, next) => {
+    await next();
+    let loadData = await searchById();
 
     var obj = {
       message: '加载成功',

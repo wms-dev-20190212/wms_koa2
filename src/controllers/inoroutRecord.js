@@ -33,10 +33,12 @@ module.exports = {
   'GET /api/inoroutRecordList': async (ctx, next) => {
     await next();
     let sqlData
-    sqlData = " select  distinct  a.id, a.sort, a.tabName" +
-      " from  tabList a  " +
-      " where a.isDelete = 0  " +
-      " ORDER BY a.sort  ASC"
+    let offset = GetUrlParam(ctx.url, "offset") || 0;
+    let limit = GetUrlParam(ctx.url, "limit") || 20;
+    sqlData = " select  distinct  a.id, a.item, a.num, a.price, a.receipt, a.type,b.name as inoroutType,b.fuzeren as fuzeren" +
+      " from  inoroutRecord a , inoroutType b" +
+      " where a.isDelete = 0 "+
+      " ORDER BY a.id  ASC limit "+offset+","+limit
     var loadData = await sequelize.query(sqlData, {
       // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
       type: sequelize.QueryTypes.SELECT

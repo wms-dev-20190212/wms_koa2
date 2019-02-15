@@ -33,8 +33,8 @@ module.exports = {
   'GET /api/inoroutTypeList': async (ctx, next) => {
     await next();
     let sqlData
-    sqlData = " select  distinct  a.id, a.sort, a.tabName" +
-      " from  tabList a  " +
+    sqlData = " select  distinct  a.id, a.name, a.fuzeren, a.type, a.isCost" +
+      " from  inoroutType a  " +
       " where a.isDelete = 0  " +
       " ORDER BY a.sort  ASC"
     var loadData = await sequelize.query(sqlData, {
