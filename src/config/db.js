@@ -71,6 +71,7 @@ module.exports = function defineModel(name, attributes) {
           obj.isDelete = 0;
           obj.createdAt = Date.now();
           obj.updatedAt = Date.now();
+          obj.timestamp = Date.now();
           obj.version = 0;
         } else {
           obj.updatedAt = Date.now();

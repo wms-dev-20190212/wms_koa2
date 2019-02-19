@@ -11,6 +11,31 @@ const jwt = require('jsonwebtoken');
 
 const models = require('../models/users'); //引入数据模型，可自动生成对应数据库表 gyx.sync({force: true});
 module.exports = {
+  'GET /api/user/userAllList': async (ctx, next) => {
+    await next();
+    let sqlData
+    sqlData = " select  distinct  a.id, a.userName, a.address, a.iphoneNum, a.depart" +
+      " from  users a  " +
+      " where a.isDelete = 0  " +
+      " ORDER BY a.id  ASC"
+    var loadData = await sequelize.query(sqlData, {
+      // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
+      type: sequelize.QueryTypes.SELECT
+    })
+
+    var obj = {
+      message: '加载成功',
+      code: 200,
+      success: true,
+      data: {
+        list: loadData,
+        totle: loadData.length
+      }
+
+    }
+    ctx.response.type = 'application/json';
+    ctx.response.body = obj;
+  },
   'GET /api/user/userList': async (ctx, next) => {
     await next();
     let sqlData

@@ -33,10 +33,10 @@ module.exports = {
   'GET /api/warehouseInoroutList': async (ctx, next) => {
     await next();
     let sqlData
-    sqlData = " select  distinct  a.date, a.yewuyuan, a.type, a.company, a.remark" +
-      " from  warehouseInorout a  " +
-      " where a.isDelete = 0  " +
-      " ORDER BY a.sort  ASC"
+    sqlData = " select  distinct  a.date, a.type, b.name as company ,c.name as warehouse,d.name as inoroutType,e.userName as userName, a.remark" +
+      " from  warehouseInorout a , company b ,warehouse c ,inoroutType d,users e" +
+      " where a.isDelete = 0 and a.company = b.id and a.warehouse = c.id and a.type = d.id and a.yewuyuan = e.id " +
+      " ORDER BY a.id  ASC"
     var loadData = await sequelize.query(sqlData, {
       // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
       type: sequelize.QueryTypes.SELECT
@@ -59,6 +59,8 @@ module.exports = {
   'POST /api/warehouseInoroutList': async (ctx, next) => {
     try {
       await next();
+      ctx.request.body.yewuyuan = ctx.request.body.userName
+      ctx.request.body.date = Date.now();
       var vilad = service.createProduct(ctx.request.body);
       var data = {
         message: '请求成功',

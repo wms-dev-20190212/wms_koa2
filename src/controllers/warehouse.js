@@ -34,9 +34,9 @@ module.exports = {
     await next();
     let sqlData
     sqlData = " select  distinct  a.id, a.name, a.fuzeren, a.phone, a.address, a.remark" +
-      " from  warehouse a  " +
-      " where a.isDelete = 0  " +
-      " ORDER BY a.sort  ASC"
+      " from  warehouse a ,users b " +
+      " where a.isDelete = 0 and a.fuzeren = b.id " +
+      " ORDER BY a.id  ASC"
     var loadData = await sequelize.query(sqlData, {
       // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
       type: sequelize.QueryTypes.SELECT
