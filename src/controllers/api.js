@@ -40,7 +40,7 @@ module.exports = {
     // 创建可读流
     const reader = fs.createReadStream(files.path);
     // 获取上传文件扩展名
-    let filePath = path.join(process.cwd(), '../pic/') + `${files.name}`;
+    let filePath = path.join(process.cwd(), '../wmsPic/') + `${files.name}`;
     // 创建可写流
     const upStream = fs.createWriteStream(filePath);
     // 可读流通过管道写入可写流
@@ -51,7 +51,7 @@ module.exports = {
       code: ctx.response.status,
       data: {
         fileName: files.name,
-        savePath: 'pic/'+files.name
+        savePath: 'wmsPic/'+files.name
       }
 
     }
