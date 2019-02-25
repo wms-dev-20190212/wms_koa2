@@ -7,8 +7,11 @@ var dbForm = dbConfig('goods', {
     primaryKey: true
   },
   isDelete: Sequelize.BIGINT(11),
-  maintype: Sequelize.STRING(20),
-  subtype: Sequelize.STRING(20),
+  maintype: Sequelize.STRING(200),
+  subtype: {
+    type: Sequelize.STRING(20),
+    allowNull: true
+  },
   name: Sequelize.STRING(20),
   encode: Sequelize.STRING(20),
   barcode: Sequelize.STRING(20),
@@ -18,7 +21,7 @@ var dbForm = dbConfig('goods', {
   lowerlimit: Sequelize.BIGINT(4),
   inprice: Sequelize.BIGINT(4),
   outprice: Sequelize.BIGINT(4),
-  pic: Sequelize.STRING(200),
+  thumbUrl: Sequelize.STRING(200),
   content: Sequelize.STRING(200),
   timestamp: {
     type: Sequelize.DATE(0),

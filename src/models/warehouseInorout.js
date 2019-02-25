@@ -7,6 +7,10 @@ var dbForm = dbConfig('warehouseInorout', {
     primaryKey: true
   },
   isDelete: Sequelize.BIGINT(11),
+  receipt: {
+    type: Sequelize.DATE(0),
+    allowNull: false
+  },
   date: {
     type: Sequelize.DATE(0),
     allowNull: true
@@ -26,6 +30,10 @@ var dbForm = dbConfig('warehouseInorout', {
   warehouse: {
     type: Sequelize.STRING(255),
     allowNull: true
+  },
+  itemstring: {
+    type: Sequelize.STRING(255),
+    allowNull: false
   },
   remark: {
     type: Sequelize.STRING(255),

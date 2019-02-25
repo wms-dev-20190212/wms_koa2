@@ -42,9 +42,9 @@ module.exports = {
     //    tabId = ' and a.tabId = b.id';
     // }
 
-    sqlData = " select  distinct  a.id, a.maintype, a.subtype, a.name, a.encode, a.barcode, a.size, a.unit, a.upperlimit, a.lowerlimit, a.inprice, a.outprice, a.pic, a.content,b.name as goodsType,b.lowerclass as lowerclass" +
+    sqlData = " select  distinct  a.id, a.maintype, a.name, a.encode, a.barcode, a.size, a.unit, a.upperlimit, a.lowerlimit, a.inprice, a.outprice, a.thumbUrl, a.content,b.name as goodsType,b.lowerclass as lowerclass" +
       " from  goods a , goodsType b" +
-      " where a.isDelete = 0 "+
+      " where a.isDelete = 0 and a.maintype = b.id"+
       " ORDER BY a.id  ASC limit "+offset+","+limit
     var loadData = await sequelize.query(sqlData, {
       // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
