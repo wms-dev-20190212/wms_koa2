@@ -33,7 +33,7 @@ module.exports = {
   'GET /api/warehouseInoroutList': async (ctx, next) => {
     await next();
     let sqlData
-    sqlData = " select  distinct  a.date, a.type, b.name as company ,c.name as warehouse,d.name as inoroutType,e.userName as userName, a.remark" +
+    sqlData = " select  distinct a.itemstring,a.receipt, a.date, a.type, b.name as company ,c.name as warehouse,d.name as inoroutType,e.userName as userName, a.remark" +
       " from  warehouseInorout a , company b ,warehouse c ,inoroutType d,users e" +
       " where a.isDelete = 0 and a.company = b.id and a.warehouse = c.id and a.type = d.id and a.yewuyuan = e.id " +
       " ORDER BY a.id  ASC"
