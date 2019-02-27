@@ -30,6 +30,31 @@ function GetUrlParam(url, paraName) {
 }
 
 module.exports = {
+  'GET /api/warehouseAllList': async (ctx, next) => {
+    await next();
+    let sqlData
+    sqlData = " select  distinct  a.id, a.name, a.fuzeren,  a.phone, a.address, a.remark, b.userName as userName" +
+      " from  warehouse a ,users b " +
+      " where a.isDelete = 0 and a.fuzeren = b.id " +
+      " ORDER BY a.id  ASC"
+    var loadData = await sequelize.query(sqlData, {
+      // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
+      type: sequelize.QueryTypes.SELECT
+    })
+
+    var obj = {
+      message: '加载成功',
+      code: 200,
+      success: true,
+      data: {
+        list: loadData,
+        totle: loadData.length
+      }
+
+    }
+    ctx.response.type = 'application/json';
+    ctx.response.body = obj;
+  },
   'GET /api/warehouseList': async (ctx, next) => {
     await next();
     let sqlData
