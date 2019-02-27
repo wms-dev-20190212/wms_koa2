@@ -8,10 +8,10 @@ var dbForm = dbConfig('warehouseInorout', {
   },
   isDelete: Sequelize.BIGINT(11),
   receipt: {
-    type: Sequelize.DATE(0),
+    type: Sequelize.STRING(255),
     allowNull: false
   },
-  date: {
+  orderDate: {
     type: Sequelize.DATE(0),
     allowNull: true
   },
@@ -32,7 +32,7 @@ var dbForm = dbConfig('warehouseInorout', {
     allowNull: true
   },
   itemstring: {
-    type: Sequelize.STRING(255),
+    type: Sequelize.STRING(2100),
     allowNull: false
   },
   remark: {
