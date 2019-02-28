@@ -101,24 +101,13 @@ app.use(async (ctx, next) => {
 
 
 
-
-
-//app.use(views(__dirname + '/views', {
-//  extension: 'pug'
-//}))
-
 // logger
-/*app.use(async (ctx, next) => {
-  const start = new Date()
-  await next()
-  const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-})
-*/
-
-// routes
-/*app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())*/
+// app.use(async (ctx, next) => {
+//   const start = new Date()
+//   await next()
+//   const ms = new Date() - start
+//   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+// })
 
 /*app.use(async (ctx, next) => {
     console.log(`${ctx.request.method} ${ctx.request.url}`); // 打印URL
@@ -143,7 +132,7 @@ app.use(users.routes(), users.allowedMethods())*/
 */
 
 
-var port = normalizePort(process.env.PORT || '1433');
+var port = normalizePort(process.env.PORT || '50200');
 // app.set('port', port);
 
 /**

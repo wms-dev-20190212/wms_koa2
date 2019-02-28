@@ -1,6 +1,7 @@
 const service = require('../service/warehouseInorout');
 const models = require('../models/warehouseInorout'); //引入数据模型，可自动生成对应数据库表 gyx.sync({force: true});
 const Promise = require('promise');
+const APIError = require('../rest').APIError;
 
 const Sequelize = require('sequelize');
 var sequelize = new Sequelize('wms', 'test', '123456', {
@@ -57,24 +58,29 @@ module.exports = {
   },
 
   'POST /api/warehouseInoroutList': async (ctx, next) => {
-    try {
-      await next();
-      var vilad = service.createProduct(ctx.request.body);
-      var data = {
-        message: '请求成功',
-        code: 200,
-        success: true,
-        data: vilad
-      }
-      ctx.response.type = 'application/json';
-      ctx.response.body = data;
-    } catch (err) {
-      console.log(err)
-      ctx.response.code = err.statusCode || err.status || 500;
-      ctx.response.body = {
-        message: err.message
-      };
+    // try {
+    await next();
+    var vilad = service.createProduct(ctx.request.body);
+    if (vilad != null) {
+    } else {
+      throw new APIError('auth:user_not_found', 'user not found');
     }
+    // var data = {
+    //   message: '请求成功',
+    //   code: 200,
+    //   success: true,
+    //   data: vilad
+    // }
+    // ctx.response.type = 'application/json';
+    // ctx.response.body = data;
+    // } catch (err) {
+    //   console.log(err)
+    //   ctx.response.type = 'application/json';
+    //   ctx.response.code = err.statusCode || err.status || 500;
+    //   ctx.response.body = {
+    //     message: err.message
+    //   };
+    // }
   },
   'PUT /api/warehouseInoroutList': async (ctx, next) => {
     try {

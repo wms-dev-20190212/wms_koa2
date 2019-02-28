@@ -129,7 +129,7 @@ module.exports = {
   'DELETE /api/goodsList/:id': async (ctx, next) => {
     try {
       await next();
-      var vilad = service.delProduct(ctx.params.id);
+      var vilad = service.upProduct(ctx.request.body);
       var data = {
         message: '删除成功',
         code: 200,
@@ -145,5 +145,31 @@ module.exports = {
       };
     }
 
+  },
+
+  'POST /api/goodsSize': async (ctx, next) => {
+    try {
+      await next();
+      let list = ctx.request.body.goodsList
+      for(let x  in list){
+        let obj ={}
+        obj.id = list[x].id
+        obj.size = list[x].size
+         service.upProduct(obj);
+      }
+      var data = {
+        message: '请求成功',
+        code: 200,
+        success: true
+      }
+      ctx.response.type = 'application/json';
+      ctx.response.body = data;
+    } catch (err) {
+      console.log(err)
+      ctx.response.code = err.statusCode || err.status || 500;
+      ctx.response.body = {
+        message: err.message
+      };
+    }
   },
 };
