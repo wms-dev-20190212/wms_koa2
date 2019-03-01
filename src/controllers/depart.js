@@ -2,12 +2,6 @@ const service = require('../service/depart');
 const models = require('../models/depart'); //引入数据模型，可自动生成对应数据库表 gyx.sync({force: true});
 const Promise = require('promise');
 
-const Sequelize = require('sequelize');
-var sequelize = new Sequelize('wms', 'test', '123456', {
-  host: 'localhost',
-  port: '3306',
-  dialect: 'mysql'
-});
 
 function GetUrlParam(url, paraName) {
   var arrObj = url.split("?");
@@ -38,55 +32,26 @@ function GetUrlParam(url, paraName) {
 //   return strMap;
 // }
 
-//查询
-async function searchById() {
-  try {
-    let sqlDataById, childDepartList
-    sqlDataById = " select  distinct  a.id, a.parent_id, a.name, a.des, a.major, a.phone" +
-      " from  depart a  " +
-      " where a.isDelete = 0 and a.parent_id = '0' " +
-      " ORDER BY a.id  ASC"
-    var departMapList = await sequelize.query(sqlDataById, {
-      // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
-      type: sequelize.QueryTypes.SELECT
-    })
-
-    for(let x of departMapList){
-      childDepartList = await searchByPid(x.id);
-      x.children = childDepartList
-    }
-
-    return departMapList
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-//递归查询
-async function searchByPid(id) {
-  try {
-    let sqlData, childDepartList
-    sqlData = " select  distinct  a.id, a.parent_id, a.name, a.des, a.major, a.phone" +
-      " from  depart a  " +
-      " where a.isDelete = 0  and a.parent_id ='" + id + "' ORDER BY a.id  ASC"
-    var departMapList = await sequelize.query(sqlData, {
-      // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
-      type: sequelize.QueryTypes.SELECT
-    })
-    for(let x of departMapList){
-      childDepartList = await searchByPid(x.id);
-      x.children = childDepartList
-    }
-    return departMapList
-  } catch (err) {
-    console.log(err);
-  }
-}
-
 module.exports = {
+  'GET /api/departAllList': async (ctx, next) => {
+    await next();
+    let loadData = await service.searchAllId();
+    var obj = {
+      message: '加载成功',
+      code: 200,
+      success: true,
+      data: {
+        list: loadData,
+        totle: loadData.length
+      }
+
+    }
+    ctx.response.type = 'application/json';
+    ctx.response.body = obj;
+  },
   'GET /api/departList': async (ctx, next) => {
     await next();
-    let loadData = await searchById();
+    let loadData = await service.searchById();
 
     var obj = {
       message: '加载成功',

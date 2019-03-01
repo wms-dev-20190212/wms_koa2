@@ -1,14 +1,9 @@
-const service = require('../service/warehouseInorout');
-const models = require('../models/warehouseInorout'); //引入数据模型，可自动生成对应数据库表 gyx.sync({force: true});
+const service = require('../service/fbs');
+const models = require('../models/fbs'); //引入数据模型，可自动生成对应数据库表 gyx.sync({force: true});
 const Promise = require('promise');
 const APIError = require('../rest').APIError;
 
-const Sequelize = require('sequelize');
-var sequelize = new Sequelize('wms', 'test', '123456', {
-  host: 'localhost',
-  port: '3306',
-  dialect: 'mysql'
-});
+
 
 function GetUrlParam(url, paraName) {
   var arrObj = url.split("?");
@@ -31,12 +26,12 @@ function GetUrlParam(url, paraName) {
 }
 
 module.exports = {
-  'GET /api/warehouseInoroutList': async (ctx, next) => {
+  'GET /api/fbsList': async (ctx, next) => {
     await next();
     let sqlData
-    sqlData = " select  distinct a.id,a.itemstring,a.receipt, a.orderDate, a.company, a.warehouse,  a.yewuyuan,a.type, b.name as companyName ,c.name as warehouseName,d.name as inoroutType,e.userName as userName, a.remark" +
-      " from  warehouseInorout a , company b ,warehouse c ,inoroutType d,users e" +
-      " where a.isDelete = 0 and a.company = b.id and a.warehouse = c.id and a.type = d.id and a.yewuyuan = e.id " +
+    sqlData = " select  distinct a.id,a.itemstring,a.receipt, a.dispatchDate,a.state, a.orderDate,a.yewuyuan, a.weight, b.code,  b.userName," +
+      " from  fbs a,users b" +
+      " where a.isDelete = 0 and a.yewuyuan = b.id  " +
       " ORDER BY a.id  ASC"
     var loadData = await sequelize.query(sqlData, {
       // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
@@ -57,7 +52,7 @@ module.exports = {
     ctx.response.body = obj;
   },
 
-  'POST /api/warehouseInoroutList': async (ctx, next) => {
+  'POST /api/fbsList': async (ctx, next) => {
     try {
       await next();
       var vilad = service.createProduct(ctx.request.body);
@@ -82,7 +77,7 @@ module.exports = {
       };
     }
   },
-  'PUT /api/warehouseInoroutList': async (ctx, next) => {
+  'PUT /api/fbsList': async (ctx, next) => {
     try {
       await next();
       var vilad = service.upProduct(ctx.request.body);
@@ -101,7 +96,7 @@ module.exports = {
       };
     }
   },
-  'DELETE /api/warehouseInoroutList/:id': async (ctx, next) => {
+  'DELETE /api/fbsList/:id': async (ctx, next) => {
     try {
       await next();
       var vilad = service.delProduct(ctx.params.id);

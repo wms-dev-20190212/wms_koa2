@@ -7,6 +7,10 @@ var dbForm = dbConfig('users', {
     primaryKey: true
   },
   isDelete: Sequelize.BIGINT(11),
+  code: {
+    type: Sequelize.BIGINT(11),
+    allowNull: true
+  },
   userName: Sequelize.STRING(255),
   password: Sequelize.STRING(255),
   address: {
@@ -15,6 +19,10 @@ var dbForm = dbConfig('users', {
   },
   iphoneNum: {
     type: Sequelize.BIGINT(11),
+    allowNull: true
+  },
+  shopName: {
+    type: Sequelize.STRING(255),
     allowNull: true
   },
   depart: {

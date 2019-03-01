@@ -12,6 +12,10 @@ var dbForm = dbConfig('depart', {
     allowNull: false
   },
   name: Sequelize.STRING(255),
+  dtype: {
+    type: Sequelize.BIGINT(11),
+    allowNull: false
+  },
   des: {
     type: Sequelize.STRING(255),
     allowNull: true

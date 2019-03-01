@@ -1,7 +1,7 @@
 //var databaseJson = require('./petsData');
 const Sequelize = require('sequelize');
 const dbConfig = require('../config/db');
-var dbForm = dbConfig('warehouseInorout', {
+var dbForm = dbConfig('fbs', {
   id: {
     type: Sequelize.STRING(50),
     primaryKey: true
@@ -13,23 +13,19 @@ var dbForm = dbConfig('warehouseInorout', {
   },
   orderDate: {
     type: Sequelize.DATE(0),
+    allowNull: false
+  },
+  dispatchDate: {
+    type: Sequelize.DATE(0),
+    allowNull: true
+  },
+  weight: {
+    type: Sequelize.BIGINT(11),
     allowNull: true
   },
   yewuyuan: {
     type: Sequelize.STRING(255),
-    allowNull: true
-  },
-  type: {
-    type: Sequelize.STRING(255),
-    allowNull: true
-  },
-  company: {
-    type: Sequelize.STRING(255),
-    allowNull: true
-  },
-  warehouse: {
-    type: Sequelize.STRING(255),
-    allowNull: true
+    allowNull: false
   },
   itemstring: {
     type: Sequelize.STRING(2100),
@@ -38,10 +34,6 @@ var dbForm = dbConfig('warehouseInorout', {
   state: {
     type: Sequelize.BIGINT(11),
     allowNull: false
-  },
-  remark: {
-    type: Sequelize.STRING(255),
-    allowNull: true
   },
   timestamp: {
     type: Sequelize.DATE(0),

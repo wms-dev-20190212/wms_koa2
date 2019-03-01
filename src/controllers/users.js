@@ -14,9 +14,9 @@ module.exports = {
   'GET /api/user/userAllList': async (ctx, next) => {
     await next();
     let sqlData
-    sqlData = " select  distinct  a.id, a.userName, a.address, a.iphoneNum, a.depart" +
-      " from  users a  " +
-      " where a.isDelete = 0  " +
+    sqlData = " select  distinct  a.id, a.code, a.shopName, a.userName, a.address, a.iphoneNum, a.depart,b.name as departName" +
+      " from  users a , depart b" +
+      " where a.isDelete = 0 and a.depart = b.id " +
       " ORDER BY a.id  ASC"
     var loadData = await sequelize.query(sqlData, {
       // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
@@ -39,10 +39,10 @@ module.exports = {
   'GET /api/user/userList': async (ctx, next) => {
     await next();
     let sqlData
-    sqlData = " select  distinct  a.id, a.userName, a.address, a.iphoneNum, a.depart" +
-      " from  users a  " +
-      " where a.isDelete = 0  " +
-      " ORDER BY a.id  ASC limit 0,10000"
+    sqlData = " select  distinct  a.id, a.code, a.shopName, a.userName, a.address, a.iphoneNum, a.depart,b.name as departName" +
+      " from  users a , depart b" +
+      " where a.isDelete = 0 and a.depart = b.id " +
+      " ORDER BY a.id  ASC"
     var loadData = await sequelize.query(sqlData, {
       // replacements: [collectionListtotle.rows[getmax].createdAt, collectionListtotle.rows[getmix].createdAt], //按顺序传入需要替换？的值
       type: sequelize.QueryTypes.SELECT
