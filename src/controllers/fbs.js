@@ -3,6 +3,12 @@ const models = require('../models/fbs'); //引入数据模型，可自动生成�
 const Promise = require('promise');
 const APIError = require('../rest').APIError;
 
+const Sequelize = require('sequelize');
+var sequelize = new Sequelize('wms', 'test', '123456', {
+  host: 'localhost',
+  port: '3306',
+  dialect: 'mysql'
+});
 
 
 function GetUrlParam(url, paraName) {
@@ -29,7 +35,7 @@ module.exports = {
   'GET /api/fbsList': async (ctx, next) => {
     await next();
     let sqlData
-    sqlData = " select  distinct a.id,a.itemstring,a.receipt, a.dispatchDate,a.state, a.orderDate,a.yewuyuan, a.weight, b.code,  b.userName," +
+    sqlData = " select  distinct a.id,a.itemstring,a.receipt, a.dispatchDate,a.state, a.orderDate,a.yewuyuan, a.weight, b.code,  b.userName " +
       " from  fbs a,users b" +
       " where a.isDelete = 0 and a.yewuyuan = b.id  " +
       " ORDER BY a.id  ASC"
