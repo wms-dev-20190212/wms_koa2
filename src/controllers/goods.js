@@ -78,7 +78,7 @@ module.exports = {
       ctx.response.type = 'application/json';
       ctx.response.body = data;
     } catch (err) {
-      console.log(err)
+      console.log('123123'+err)
       ctx.response.code = err.statusCode || err.status || 500;
       ctx.response.body = {
         message: err.message

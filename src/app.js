@@ -62,37 +62,38 @@ app.use(logger())
 /**
  * 错误捕捉中间件
  */
-app.use(async (ctx, next) => {
-  try {
-    await next();
-  } catch (err) {
-    if (err.status === 401) {
-      //   // ctx.status = 401;
-      //   // ctx.body = 'Protected resource, use Authorization header to get access\n';
-      console.log(err)
-      ctx.throw(err.status, '无权限');
-
-      // var obj = {
-      //   message: err.message,
-      //   code: err.status,
-      //   success: false,
-      // }
-      // ctx.response.body = obj;
-      // ctx.app.emit('error',err, ctx);
-
-    } else {
-      throw err;
-    }
-
-    // // 手动释放 error 事件
-  }
-});
+// app.use(async (ctx, next) => {
+//   try {
+//     await next();
+//   } catch (err) {
+//     console.log('mide'+err)
+//     if (err.status === 401) {
+//       //   // ctx.status = 401;
+//       //   // ctx.body = 'Protected resource, use Authorization header to get access\n';
+//       console.log(err)
+//       ctx.throw(err.status, '无权限');
+//
+//       // var obj = {
+//       //   message: err.message,
+//       //   code: err.status,
+//       //   success: false,
+//       // }
+//       // ctx.response.body = obj;
+//       // ctx.app.emit('error',err, ctx);
+//
+//     } else {
+//       throw err;
+//     }
+//
+//     // // 手动释放 error 事件
+//   }
+// });
 
 // 继续触发error事件
-// app.on('error',(err, ctx) => {
-//     console.error('server error', err.message);
-//     console.error(err);
-// });
+app.on('error',(err, ctx) => {
+    console.error('server error111', err.message);
+    console.error(err);
+});
 // app.use(koajwt({
 //   secret: 'my_token'
 // }).unless({
